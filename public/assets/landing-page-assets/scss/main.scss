@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import "responsive";
+@import "variables";
+@import "over-ride";
+@import "navbar";
+@import "custom-classes";
+
+/*=================== main.scss file style start ===================*/
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    background-color: #181818;
+}
+.navbar-brand {
+    max-width: 220px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-height: 50px;
+    overflow: hidden;
+}
+.main-banner {
+    background-image: url("../imgs/jpg/mainb.jpg");
+    min-height: 890px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    @include large-1370 {
+        padding-top: 100px;
+    }
+}
+.navbar-nav {
+    column-gap: 80px;
+    @include medium-991 {
+        column-gap: 10px;
+    }
+}
+.nav-link {
+    color: $white;
+    text-transform: capitalize;
+    font: normal 500 18px/17px "Poppins", sans-serif;
+    transition: 0.3s;
+    @include medium-991 {
+        font-size: 14px;
+    }
+    &:hover {
+        color: $primary;
+    }
+}
+.nav-link.active {
+    color: $primary !important;
+}
+.primary-btn {
+    padding: 12px 65px;
+    background-color: $primary;
+    color: $white;
+    transition: 0.3s;
+    text-transform: capitalize;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    &:hover {
+        background-color: transparent;
+        color: $primary;
+        border-color: $primary;
+    }
+}
+
+.site-text {
+    h1 {
+        font-size: 54px;
+        font-weight: 700;
+        text-transform: capitalize;
+        color: $white;
+        line-height: 55px;
+        @include m-575 {
+            font-size: 34px;
+            line-height: 40px;
+        }
+        span {
+            color: $primary;
+        }
+    }
+    p {
+        font-size: 22px;
+        font-weight: 300;
+        color: $white;
+        line-height: 26px;
+        @include m-575 {
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+}
+
+.site-text.small {
+    max-width: 355px;
+    width: 100%;
+    text-align: right;
+    h1 {
+        font: normal 700 34px/17px "Poppins", sans-serif;
+        color: $white;
+        span {
+            color: $black;
+        }
+    }
+    p {
+        font: normal 300 14px/20px "Poppins", sans-serif;
+        color: $white;
+    }
+}
+
+// ;;;;
+
+.about-section {
+    background: linear-gradient(rgba(0, 18, 22, 0.55) 0%, rgb(0, 18, 22) 100%);
+    backdrop-filter: blur(5px);
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        background: linear-gradient(
+            180deg,
+            rgba(251, 251, 251, 0) 0%,
+            rgba(0, 0, 0, 0.5) 100%
+        );
+        backdrop-filter: blur(5px);
+        height: 100px;
+        top: -100px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 0;
+        @include m-575 {
+            display: none;
+        }
+    }
+
+    .about-banner {
+        background-image: url("../imgs/png/whowe.png");
+        min-height: 580px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        padding: 50px;
+        z-index: 1;
+        position: relative;
+        @include m-575 {
+            padding: 10px;
+        }
+    }
+}
+
+// ;;;;;
+
+.app-section {
+    background-image: url("../imgs/jpg/appbg.jpg");
+    min-height: 645px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.newsletter {
+    background-image: url("../imgs/ftft.jpg");
+    min-height: 264px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 20px 0;
+}
+
+.copyrights {
+    background: #001216;
+    min-height: 130px;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.slider-section {
+    background-image: url("../imgs/jpg/sliderbg.jpg");
+    min-height: 800px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 40px 0;
+}
+
+.ft-float-img {
+    max-width: 450px;
+    width: 100%;
+    max-height: 550px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    left: 0;
+    right: auto;
+    top: -150px;
+    bottom: auto;
+    @include large-1370 {
+        max-width: 250px;
+        top: 0px;
+    }
+}
+
+.sub-input {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    gap: 20px;
+    input {
+        max-width: 380px;
+        width: 100%;
+        height: 62px;
+        &::placeholder {
+            color: $white;
+        }
+        &:focus {
+            border: 1px solid $white !important;
+        }
+    }
+    .btn.btn-light {
+        color: $primary;
+        height: 62px;
+        text-transform: capitalize;
+        padding: 10px 45px;
+        transition: 0.3s;
+        &:hover {
+            background: $secondary;
+            color: $white;
+            border: 1px solid $white;
+        }
+    }
+}
+
+.img-slider {
+    max-width: 300px;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    border: 2px solid $primary;
+    box-sizing: border-box;
+    margin: 0 auto;
+    @include m-575 {
+        height: auto;
+    }
+}
+
+.app-download {
+    .d-btn {
+        max-width: 150px;
+        width: 100%;
+        height: 50px;
+        border-radius: 20px;
+    }
+}
+
+.navbar-fixed-top.scrolled {
+    background-color: $secondary !important;
+    transition: background-color 200ms linear;
+}
+
+.navbar-toggler {
+    color: $primary;
+    border: none !important;
+    border-radius: 0;
+    font-size: 24px;
+    &:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+.navbar-collapse {
+    @include small-767 {
+        position: absolute;
+        top: 55px;
+        min-width: auto;
+        max-width: 90%;
+        width: 100%;
+        background: $secondary;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        border-radius: 20px;
+        margin: 0 auto;
+    }
+}
+
+// .swiper-slide {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border-radius: 18px;
+//   font-size: 22px;
+//   font-weight: bold;
+//   color: #fff;
+// }

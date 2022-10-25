@@ -102,16 +102,18 @@ class TournamentController extends Controller
     public function levelWiseMatches(Request $request)
     {
         $data = [];
-        $tournamentID = $request->tournament_id;
-        $teamID = $request->team_id;
-        $tournamentLevels = TournamentLevel::where('tournament_id', $tournamentID)->get();
+        $user_id = $request->user()->id;
+
+        $team_ids = TeamMember::where('user_id', $user_id)->pluck('team_id');
+        $tournament_ids = Enrollment::whereIn('team_id', $team_ids)->pluck('tournament_id')->toArray();
+
+        $tournamentLevels = TournamentLevel::whereIn('tournament_id', $tournament_ids)->get();
         if (count($tournamentLevels) > 0) {
             foreach ($tournamentLevels as $key => $level) {
                 $levelMatchIDs = TournamentLevelMatch::where('tournament_level_id', $level->id)->pluck('id')->toArray();
                 $data[$key]['tournament_level'] = $level->level;
                 $data[$key]['tournament_level_matches'] = $levelMatchIDs;
                 if (count($levelMatchIDs) > 0) {
-
                     $teamMatch = TeamMatch::whereIn('tournament_level_match_id', $levelMatchIDs)->with('team')->get();
                     $data[$key]['team_match'] = $teamMatch;
                 } else {

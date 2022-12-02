@@ -305,7 +305,15 @@
                 <span class="text-light text-capitalize get-center mx-3">|</span>
                 <a href="{{ route('privacy') }}" target="_blank" rel="noopener noreferrer"
                     class="text-light text-capitalize get-center">conditions</a>
+
             </div>
+        </div>
+        <div class="social-icons-footer">
+            <a href="http://instagram.com/gamersparlor"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/channel/UCKJ2DMz7LjiIONsY-JioWvw"><i
+                    class="fa-brands fa-youtube"></i></a>
+            <a href="http://twitter.com/gamersparlor"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://discord.com/invite/KwEGAz5y74"><i class="fa-brands fa-discord"></i></a>
         </div>
     </footer>
 

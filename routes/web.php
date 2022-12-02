@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubscriptionPriceController;
 use App\Http\Controllers\TournamentLevelController;
 use App\Http\Controllers\TournamentLevelMatchResultController;
 
@@ -35,7 +37,10 @@ Route::get('/', [UserController::class, 'landingPage']);
 Route::get('/home/terms-polices', [UserController::class, 'showTermsPolices'])->name('terms');
 Route::get('/home/privacy-polices', [UserController::class, 'showPrivacyPolices'])->name('privacy');
 Route::post('/upload-video', [UserController::class, 'uploadVideo'])->name('upload-video');
-
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 Auth::routes();
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
@@ -52,6 +57,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resources(['tournaments' => TournamentController::class]);
     Route::resources(['tournament-levels' => TournamentLevelController::class]);
     Route::resources(['coins' => CoinController::class]);
+    Route::resources(['subscriptions' => SubscriptionPriceController::class]);
     Route::resources(['tournament-level-match-result' => TournamentLevelMatchResultController::class]);
     Route::get('show-modal/{match_id}', [TournamentLevelController::class, 'show_modal'])->name('show-modal');
     Route::resources(['teams' => TeamController::class]);
@@ -73,4 +79,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
     Route::get('/accept-transaction/{id}', [UserController::class, 'accept_transaction'])->name('accept-transaction');
     Route::get('/reject-transaction/{id}', [UserController::class, 'reject_transaction'])->name('reject-transaction');
+
+    Route::get('/subscription-transactions', [UserController::class, 'subscription_transactions'])->name('subscription-transactions');
+    Route::get('/accept-sub-transaction/{id}', [UserController::class, 'accept_sub_transaction'])->name('accept-sub-transaction');
+    Route::get('/reject-sub-transaction/{id}', [UserController::class, 'reject_sub_transaction'])->name('reject-sub-transaction');
 });

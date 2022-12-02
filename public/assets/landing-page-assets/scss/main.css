@@ -828,3 +828,21 @@ body {
         margin: 0 auto;
     }
 } /*# sourceMappingURL=main.css.map */
+
+.social-icons-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.social-icons-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8ece25;
+    color: #fff;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    font-size: 18px;
+}

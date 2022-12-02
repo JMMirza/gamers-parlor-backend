@@ -60,12 +60,14 @@ class TeamController extends Controller
 
     public function createTeam(Request $request)
     {
+        $user = $request->user();
         $tournament = Tournament::findOrFail($request->tournament_id);
         $enrolled_teams = Enrollment::where('tournament_id', $request->tournament_id)->get();
         $user_enrollment = Enrollment::where(['user_id' => $request->user()->id, 'tournament_id', $request->tournament_id])->first();
         $credit = Transaction::where('user_id', \Auth::user()->id)->sum('amount');
         if ($credit > $tournament->registration_fee) {
             if (!$user_enrollment) {
+                // if ($user->is_vip == 0) {
                 if ($tournament->number_of_request >= count($enrolled_teams)) {
                     Transaction::create([
                         'user_id' => $request->user()->id,
@@ -118,6 +120,8 @@ class TeamController extends Controller
                     ]);
                     return response($team, 200);
                 }
+                // } else {
+                // }
                 return response('Tournament participant places are filled', 400);
             }
             return response('You have already participated in this tournament', 400);
@@ -141,6 +145,13 @@ class TeamController extends Controller
     {
         $team_id = $request->team_id;
         $teams = TeamMember::where('team_id', $team_id)->with(['team', 'user'])->get();
+        return response($teams, 200);
+    }
+
+    public function listLadderTeams()
+    {
+        $teams = Team::orderBy('score', 'asc')->get();
+
         return response($teams, 200);
     }
 }

@@ -79,6 +79,15 @@
                                 </a>
                             </li>
 
+                            <li class="nav-item">
+                                <a href="{{ route('subscriptions.index') }}"
+                                    class="nav-link {{ Request::is('subscriptions') || Request::is('subscriptions/*') ? 'active' : '' }}"
+                                    data-key="t-dashboards">
+                                    Subscription Price
+                                </a>
+                            </li>
+
+
                         </ul>
                     </div>
                 </li>
@@ -174,6 +183,12 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('transactions') }}" role="button">
                         <i class="ri-home-smile-line"></i> <span data-key="t-dashboards">Transactions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('subscription-transactions') }}" role="button">
+                        <i class="ri-home-smile-line"></i> <span data-key="t-dashboards">Subscription
+                            Transactions</span>
                     </a>
                 </li>
                 <li class="nav-item">

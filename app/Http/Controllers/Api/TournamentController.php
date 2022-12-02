@@ -103,21 +103,22 @@ class TournamentController extends Controller
     {
         $data = [];
         $user_id = $request->user()->id;
-
+        $result = $request->matchStatus;
+        // if()
         $team_ids = TeamMember::where('user_id', $user_id)->pluck('team_id');
         $tournament_ids = Enrollment::whereIn('team_id', $team_ids)->pluck('tournament_id')->toArray();
 
         $tournamentLevels = TournamentLevel::whereIn('tournament_id', $tournament_ids)->get();
         if (count($tournamentLevels) > 0) {
             foreach ($tournamentLevels as $key => $level) {
-                $levelMatchIDs = TournamentLevelMatch::where('tournament_level_id', $level->id)->pluck('id')->toArray();
-                $data[$key]['tournament_level'] = $level->level;
-                $data[$key]['tournament_level_matches'] = $levelMatchIDs;
+                $levelMatchIDs = TournamentLevelMatch::where('tournament_level_id', $level->id)->where('status', $result)->pluck('id')->toArray();
+                // $data[$key]['tournament_level'] = $level->level;
+                // $data[$key]['tournament_level_matches'] = $levelMatchIDs;
                 if (count($levelMatchIDs) > 0) {
                     $teamMatch = TeamMatch::whereIn('tournament_level_match_id', $levelMatchIDs)->with('team')->get();
-                    $data[$key]['team_match'] = $teamMatch;
+                    $data[] = $teamMatch;
                 } else {
-                    $data[$key]['team_match'] = [];
+                    $data[] = [];
                 }
             }
         }
@@ -147,8 +148,6 @@ class TournamentController extends Controller
     public function uploadResult(Request $request)
     {
         $request->validate([
-            'tournament_id' => 'required|integer',
-            'tournament_level_id' => 'required|integer',
             'tournament_level_match_id' => 'required|integer',
             'winner_team_id' => 'required|integer',
             'winning_proof' => 'required',

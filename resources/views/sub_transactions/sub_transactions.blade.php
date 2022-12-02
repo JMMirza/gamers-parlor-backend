@@ -5,21 +5,22 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Games</h4>
-                    <div class="flex-shrink-0">
-                        <a href="{{ route('games.create') }}" class="btn btn-success btn-label btn-sm">
-                            <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i> Add New Game
-                        </a>
-                    </div>
+                    <h4 class="card-title mb-0 flex-grow-1">Subscription Transactions</h4>
+
                 </div>
                 <div class="card-body">
-                    <table id="games-data-table" class="table table-bordered table-striped align-middle table-nowrap mb-0"
-                        style="width:100%">
+                    <table id="transactions-data-table"
+                        class="table table-bordered table-striped align-middle table-nowrap mb-0" style="width:100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Title</th>
-                                <th>Logo</th>
+                                <th>User Name</th>
+                                <th>Amount</th>
+                                <th>Transaction ID</th>
+                                <th>Full Name</th>
+                                <th>Address</th>
+                                <th>Postal Code</th>
+                                <th>Country Code</th>
                                 <th>Status</th>
                                 <th>Created At</th>
                                 <th>Action</th>
@@ -41,7 +42,8 @@
                 "sFilterInput": "form-control",
                 "sLengthSelect": "form-control"
             });
-            $('#games-data-table').DataTable({
+
+            $('#transactions-data-table').DataTable({
                 retrieve: true,
                 processing: true,
                 language: {
@@ -52,35 +54,46 @@
                 bLengthChange: false,
                 pageLength: 10,
                 scrollX: true,
-                ajax: "{{ route('games.index') }}",
+                ajax: "{{ route('subscription-transactions') }}",
                 columns: [{
                         data: 'id',
                         name: 'id',
                         width: "5%"
                     },
                     {
-                        data: 'title',
-                        name: 'title',
+                        data: 'user.name',
+                        name: 'user.name',
                         width: "20%"
                     },
                     {
-                        data: 'logo_url',
-                        name: 'logo_url',
-                        width: "10%",
-                        render: function(data, type, full, meta) {
-
-                            var str1 = data;
-                            var str2 = "pdf";
-                            var path = data;
-                            if (str1.indexOf(str2) != -1) {
-                                path = '/files/paltforms/doc.png';
-                            }
-
-                            return '<a href="javascript:void(0);" class="preview-img" data-url="' +
-                                data +
-                                '"><img class="rounded avatar-xs header-profile-user mt-1" src="' +
-                                path + '" alt="Header Avatar" /></a>';
-                        }
+                        data: 'amount',
+                        name: 'amount',
+                        width: "20%"
+                    },
+                    {
+                        data: 'transaction_id',
+                        name: 'transaction_id',
+                        width: "20%"
+                    },
+                    {
+                        data: 'full_name',
+                        name: 'full_name',
+                        width: "20%"
+                    },
+                    {
+                        data: 'address_line_1',
+                        name: 'address_line_1',
+                        width: "20%"
+                    },
+                    {
+                        data: 'postal_code',
+                        name: 'postal_code',
+                        width: "20%"
+                    },
+                    {
+                        data: 'country_code',
+                        name: 'country_code',
+                        width: "20%"
                     },
                     {
                         data: 'status',
@@ -105,6 +118,7 @@
                 "order": [
                     [0, 'DESC']
                 ]
+
             });
         });
     </script>

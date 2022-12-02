@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\SubscriptionTransaction;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Notifications\VideoUploadedByUser;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
@@ -339,6 +341,54 @@ class UserController extends Controller
     public function reject_transaction($id)
     {
         $transaction = Transaction::findOrFail($id);
+        if ($transaction) {
+            $transaction->status = 'REJECT';
+            $transaction->save();
+        }
+        return redirect()->back();
+    }
+
+    public function subscription_transactions(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = SubscriptionTransaction::with('user')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('status', function ($row) {
+                    if ($row->status == 'PENDING') {
+                        return 'Pending';
+                    } elseif ($row->status == 'COMPLETE') {
+                        return 'Complete';
+                    } else {
+                        return 'REJECT';
+                    }
+                })
+                ->addColumn('action', function ($row) {
+                    return view('sub_transactions.actions', ['row' => $row]);
+                })
+                ->rawColumns(['action', 'status'])
+                ->make(true);
+        }
+        return view('sub_transactions.sub_transactions');
+    }
+
+    public function accept_sub_transaction($id)
+    {
+        $transaction = SubscriptionTransaction::findOrFail($id);
+        if ($transaction) {
+            $transaction->status = 'COMPLETE';
+            $transaction->save();
+        }
+        $user = User::findOrFail($transaction->user_id);
+        $user->is_vip = 1;
+        $user->membership_time = Carbon::now();
+        $user->save();
+        return redirect()->back();
+    }
+
+    public function reject_sub_transaction($id)
+    {
+        $transaction = SubscriptionTransaction::findOrFail($id);
         if ($transaction) {
             $transaction->status = 'REJECT';
             $transaction->save();

@@ -429,10 +429,6 @@
     padding: 0 0.5em;
 }
 
-.dataTables_scrollBody {
-    min-height: 220px;
-}
-
 .navbar-menu .btn-vertical-sm-hover,
 .navbar-nav .nav-link {
     color: #fff !important;

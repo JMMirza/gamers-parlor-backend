@@ -46,7 +46,7 @@
                                     @if ($errors->has('game_id'))
                                         {{ $errors->first('game_id') }}
                                     @else
-                                        PLease select any Status!
+                                        PLease select any game!
                                     @endif
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                     @if ($errors->has('platform_id'))
                                         {{ $errors->first('platform_id') }}
                                     @else
-                                        PLease select any Status!
+                                        PLease select any platform!
                                     @endif
                                 </div>
                             </div>
@@ -213,22 +213,22 @@
 
                         <div class="col-md-6 col-sm-12">
                             <div class="form-label-group in-border">
-                                <select class="form-select form-control mb-3" name="status_id" required>
-                                    <option value="" @if (old('status_id') == '') {{ 'selected' }} @endif
+                                <select class="form-select form-control mb-3" name="status" required>
+                                    <option value="" @if (old('status') == '') {{ 'selected' }} @endif
                                         selected disabled>
                                         Select One
                                     </option>
                                     @foreach ($statuses as $status)
                                         <option value="{{ $status->id }}"
-                                            @if (old('status_id') == $status->id) {{ 'selected' }} @endif>
+                                            @if (old('status') == $status->id) {{ 'selected' }} @endif>
                                             {{ $status->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <label for="status" class="form-label fs-5 fs-lg-1">Status</label>
                                 <div class="invalid-tooltip">
-                                    @if ($errors->has('status_id'))
-                                        {{ $errors->first('status_id') }}
+                                    @if ($errors->has('status'))
+                                        {{ $errors->first('status') }}
                                     @else
                                         PLease select any Status!
                                     @endif

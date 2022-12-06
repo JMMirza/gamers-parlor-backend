@@ -134,7 +134,7 @@ class TournamentController extends Controller
             'number_of_request' => 'required|integer',
             'registration_fee' => 'required|integer',
             'terms_and_condition' => 'required|max:2048',
-            'status_id' => 'required|integer',
+            'status' => 'required|integer',
             'game_id' => 'required|integer',
             'platform_id' => 'required|integer',
         ];
@@ -147,7 +147,7 @@ class TournamentController extends Controller
             'number_of_request.required' => 'Number of Request is required!',
             'registration_fee.required' => 'Registration Fee is required!',
             'terms_and_condition.required' => 'Terms and Condistion is required!',
-            'status_id.required' => 'Select the status!',
+            'status.required' => 'Select the status!',
             'game_id.required' => 'Select the game!',
             'platform_id.required' => 'Select the platform!'
         ]);

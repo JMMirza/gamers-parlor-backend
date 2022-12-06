@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Editing Role / 編輯身份: {{ $role->name }} </h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Editing Role : {{ $role->name }} </h4>
                     <div class="flex-shrink-0">
                         <a href="{{ route('roles.index') }}" class="btn btn-success btn-label btn-sm">
                             <i class="ri-arrow-left-fill label-icon align-middle fs-16 me-2"></i> Back
@@ -23,7 +23,7 @@
                                 <input type="text"
                                     class="form-control @if ($errors->has('name')) is-invalid @endif" id="name"
                                     name="name" placeholder="Role Name" value="{{ $role->name }}" readonly required>
-                                <label for="name" class="form-label">Role name / 身份名稱</label>
+                                <label for="name" class="form-label">Role name </label>
                                 <div class="invalid-tooltip">
                                     @if ($errors->has('name'))
                                         {{ $errors->first('name') }}
@@ -39,7 +39,7 @@
                                     class="form-control @if ($errors->has('display_name')) is-invalid @endif"
                                     id="display_name" name="display_name" placeholder="Permission Display Name"
                                     value="{{ $role->display_name }}" required>
-                                <label for="display_name" class="form-label">Role display name / 身份顯示名稱</label>
+                                <label for="display_name" class="form-label">Role display name </label>
                                 <div class="invalid-tooltip">
                                     @if ($errors->has('display_name'))
                                         {{ $errors->first('display_name') }}
@@ -56,7 +56,7 @@
                                     class="form-control @if ($errors->has('description')) is-invalid @endif"
                                     id="description" name="description" placeholder="Description"
                                     value="{{ $role->description }}" required>
-                                <label for="description" class="form-label">Role description / 身份描述</label>
+                                <label for="description" class="form-label">Role description</label>
                                 <div class="invalid-tooltip">
                                     @if ($errors->has('description'))
                                         {{ $errors->first('description') }}

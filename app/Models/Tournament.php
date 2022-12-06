@@ -18,7 +18,7 @@ class Tournament extends Model
         'number_of_request',
         'registration_fee',
         'terms_and_condition',
-        'status_id',
+        'status',
         'game_id',
         'platform_id',
         'is_vip'

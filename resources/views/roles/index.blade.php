@@ -4,7 +4,7 @@
     <div class="row" id="page-body">
         <div class="col-lg-12">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">List of roles / 身份列表</h4>
+                <h4 class="card-title mb-0 flex-grow-1">List of roles </h4>
                 <div class="flex-shrink-0">
                     <a href="{{ route('roles.create') }}" class="btn btn-success btn-label btn-sm">
                         <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i> Add New

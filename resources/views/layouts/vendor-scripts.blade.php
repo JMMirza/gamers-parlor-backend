@@ -1,19 +1,24 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.js">
+</script>
 <script src="{{ URL::asset('assets/libs/bootstrap/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/feather-icons/feather-icons.min.js') }}"></script>
+
 <script src="{{ asset('assets/libs/feather-icons/feather.min.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/plugins/lord-icon-2.1.0.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/app.min.js') }}"></script>
+{{-- <script src="{{ URL::asset('assets/js/app.min.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('assets/libs/prismjs/prism.js') }}"></script>
 <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.js">
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>

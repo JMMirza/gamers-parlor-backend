@@ -24,9 +24,9 @@ class TournamentController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
-                    if ($row->status != null) {
-                        return view('components.status_badge', ['row' => $row]);
-                    }
+                    // if ($row->status != null) {
+                    //     return view('components.status_badge', ['row' => $row]);
+                    // }
                 })
                 ->addColumn('action', function ($row) {
                     return view('settings.tournaments.actions', ['row' => $row]);

@@ -9,7 +9,7 @@
                     enctype='multipart/form-data' method="post">
                     @csrf
                     <input type="hidden" name="user_id" value="{{ \Auth::user()->id }}">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-label-group in-border">
                             <input type="text"
                                 class="form-control @if ($errors->has('name')) is-invalid @endif" id="statusName"
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-label-group in-border">
                             <input type="number"
                                 class="form-control @if ($errors->has('number_of_members')) is-invalid @endif"
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-label-group in-border">
                             <select class="form-select form-control mb-3" name="status_id" required>
                                 <option value="" @if (old('status_id') == '') {{ 'selected' }} @endif
@@ -60,6 +60,30 @@
                                     {{ $errors->first('status_id') }}
                                 @else
                                     PLease select any Status!
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group in-border">
+                            <select class="form-select form-control mb-3" name="is_ladder" required>
+                                <option value="" @if (old('is_ladder') == '') {{ 'selected' }} @endif
+                                    selected disabled>
+                                    Select One
+                                </option>
+                                <option value="1" @if (old('is_ladder') == '1') {{ 'selected' }} @endif>
+                                    Yes
+                                </option>
+                                <option value="0" @if (old('is_ladder') == '0') {{ 'selected' }} @endif>
+                                    No
+                                </option>
+                            </select>
+                            <label for="status" class="form-label fs-5 fs-lg-1">Ladder</label>
+                            <div class="invalid-tooltip">
+                                @if ($errors->has('is_ladder'))
+                                    {{ $errors->first('is_ladder') }}
+                                @else
+                                    PLease select any Ladder!
                                 @endif
                             </div>
                         </div>

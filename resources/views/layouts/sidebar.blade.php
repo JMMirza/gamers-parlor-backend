@@ -170,6 +170,26 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarLadder" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarLadder">
+                        <i class="ri-team-fill"></i>
+                        <span data-key="t-multi-level">Ladder</span>
+                    </a>
+
+                    <div class="collapse menu-dropdown" id="sidebarLadder">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('ladder-post.index') }}"
+                                    class="nav-link {{ Request::is('ladder-post') || Request::is('ladder-post/*') ? 'active' : '' }}"
+                                    data-key="t-dashboards">
+                                    Manage Ladder Post
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('tournament-enrollments.index') }}" role="button">
                         <i class="ri-home-smile-line"></i> <span data-key="t-dashboards">Team
                             Enrollment</span>

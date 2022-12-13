@@ -16,6 +16,8 @@ class Team extends Model
         'team_logo',
         'user_id',
         'status_id',
+        'is_ladder',
+        'ranking'
     ];
 
     protected $dates = [

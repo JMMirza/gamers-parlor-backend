@@ -16,6 +16,7 @@ use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\WagerPostController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\LadderPostController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubscriptionPriceController;
@@ -65,6 +66,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resources(['teams-members' => TeamMemberController::class]);
     Route::resources(['tournament-enrollments' => EnrollmentController::class]);
     Route::resources(['wager-post' => WagerPostController::class]);
+    Route::resources(['ladder-post' => LadderPostController::class]);
     Route::resources(['platforms' => PlatformController::class]);
     Route::resources(['games' => GameController::class]);
     Route::post('teams-members-create', [TeamMemberController::class, 'teams_members_create'])->name('teams-members-create');

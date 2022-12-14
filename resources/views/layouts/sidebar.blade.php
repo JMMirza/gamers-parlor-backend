@@ -244,7 +244,7 @@
                                 <a href="{{ route('staffs.index') }}"
                                     class="nav-link {{ Request::is('staffs') || Request::is('staffs/*') ? 'active' : '' }}"
                                     data-key="t-analytics">
-                                    Staffs
+                                    Customers
                                 </a>
                             </li>
                             <li class="nav-item">

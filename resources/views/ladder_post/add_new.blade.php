@@ -8,7 +8,8 @@
              </div>
              <div class="card-body">
                  <div class="live-preview">
-                     <form class="row g-3 needs-validation" novalidate action="{{ route('ladder-post.store') }}" method="post">
+                     <form class="row g-3 needs-validation" novalidate action="{{ route('ladder-post.store') }}"
+                         method="post">
                          @csrf
                          <input type="hidden" name="host_id" value="{{ \Auth::user()->id }}">
 
@@ -151,24 +152,6 @@
      </div>
  @endsection
  @push('header_scripts')
-     <style type="text/css">
-         img {
-             display: block;
-             max-width: 100%;
-         }
-
-         .preview {
-             overflow: hidden;
-             width: 160px;
-             height: 160px;
-             margin: 10px;
-             border: 1px solid red;
-         }
-
-         .modal-lg {
-             max-width: 1000px !important;
-         }
-     </style>
  @endpush
 
  @push('footer_scripts')

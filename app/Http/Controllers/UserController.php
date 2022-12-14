@@ -178,7 +178,7 @@ class UserController extends Controller
         $input['avatar'] = '';
         $user = User::create($input);
         $user->attachRole('customer');
-        return redirect(route('staffs.index'))->with('success', 'Staff created successfully');
+        return redirect(route('staffs.index'))->with('success', 'Customer created successfully');
     }
 
     /**
@@ -238,7 +238,7 @@ class UserController extends Controller
             $input = $request->all();
             $logged_user->update($input);
         }
-        return redirect(route('root'))->with('success', 'Staff updated successfully');
+        return redirect(route('root'))->with('success', 'Customer updated successfully');
     }
 
     /**

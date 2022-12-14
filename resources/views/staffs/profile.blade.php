@@ -6,9 +6,9 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     @if (isset($user_info))
-                        <h4 class="card-title mb-0 flex-grow-1">Update Staff</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Update Customer</h4>
                     @else
-                        <h4 class="card-title mb-0 flex-grow-1">Add New Staff</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Add New Customer</h4>
                     @endif
                     <div class="flex-shrink-0">
                         <a href="{{ route('staffs.index') }}" class="btn btn-success btn-label btn-sm">

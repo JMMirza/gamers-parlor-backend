@@ -11,6 +11,7 @@ use App\Models\Tournament;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Laravel\Ui\Presets\React;
 
 class TeamController extends Controller
 {
@@ -150,8 +151,63 @@ class TeamController extends Controller
 
     public function listLadderTeams()
     {
-        $teams = Team::orderBy('score', 'asc')->get();
+        $teams = Team::where('is_ladder', '1')->orderBy('score', 'asc')->get();
 
         return response($teams, 200);
+    }
+
+    public function createLadderTeam(Request $request)
+    {
+        $user = $request->user();
+        $input  = $request->all();
+        $input['user_id'] = $user->id;
+        $input['status_id'] = 1;
+        $input['is_ladder'] = 1;
+
+        if ($request->team_logo) {
+            $path = public_path() . '/files/games/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+
+            $image_parts = explode(";base64,", $request->team_logo);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . '.png';
+            $imageFullPath = $path . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+            $input['team_logo'] = $imageName;
+        }
+        $team = Team::create($input);
+        TeamMember::create([
+            'user_id' => $request->user()->id,
+            'team_id' => $team->id,
+            'role' => 'Captain'
+        ]);
+        // array_push($request->players, $request->user());
+        foreach ($request->players as  $player) {
+            TeamMember::create([
+                'user_id' => $player['id'],
+                'team_id' => $team->id,
+                'role' => 'Player'
+            ]);
+        }
+        return response($team, 200);
+    }
+
+    public function listTeamMembers(Request $request)
+    {
+        $page_no = $request->page_no;
+
+        $page_no = (isset($page_no) && $page_no > 0) ? $page_no : 1;
+        $start = ($page_no - 1) * $this->per_page_limit;
+
+        $data = TeamMember::where('team_id', $request->team_id)->with(['user', 'team'])
+            ->offset($start)
+            ->limit($this->per_page_limit)
+            ->get();
+
+        return response($data, 200);
     }
 }

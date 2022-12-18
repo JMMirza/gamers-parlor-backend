@@ -16,6 +16,7 @@ class LadderPost extends Model
         'fee',
         'start_date',
         'host_id',
+        'team_id',
         'status',
         'terms_and_condition'
     ];
@@ -43,5 +44,15 @@ class LadderPost extends Model
     public function platform()
     {
         return $this->belongsTo(Platform::class, 'platform_id', 'id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id', 'id');
+    }
+
+    public function ladder_enrollments()
+    {
+        return $this->hasMany(LadderPostEnrollment::class);
     }
 }

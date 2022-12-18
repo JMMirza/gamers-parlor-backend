@@ -55,6 +55,7 @@ class LadderController extends Controller
         $request->validate([
             'platform_id' => 'required|integer',
             'game_id' => 'required|integer',
+            'team_id' => 'required|integer',
             'fee' => 'required',
             'start_date' => 'required',
         ]);

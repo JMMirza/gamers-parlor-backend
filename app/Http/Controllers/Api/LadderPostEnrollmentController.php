@@ -13,12 +13,12 @@ class LadderPostEnrollmentController extends Controller
     {
         $request->validate([
             'ladder_post_id' => 'required|integer',
+            'team_id' => 'required|integer',
             'request_time' => 'required',
         ]);
         // $ladder_post  = WagerPost::find($request->ladder_post_id);
         // $ladder_post->status = 'PENDING';
         $input  = $request->all();
-        $input['user_id'] = $request->user()->id;
         $input['status'] = 'PENDING';
 
         $request = LadderPostEnrollment::create($input);
@@ -32,7 +32,7 @@ class LadderPostEnrollmentController extends Controller
     {
         $ladder_requests = LadderPostEnrollment::where('ladder_post_id', $request->ladder_post_id)
             ->where('status', 'PENDING')
-            ->with(['user', 'ladder_post.game'])->get();
+            ->with(['team', 'ladder_post.game'])->get();
         return response($ladder_requests, 200);
     }
 

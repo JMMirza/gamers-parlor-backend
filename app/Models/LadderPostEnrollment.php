@@ -12,7 +12,7 @@ class LadderPostEnrollment extends Model
 
     protected $fillable = [
         'ladder_post_id',
-        'user_id',
+        'team_id',
         'status',
         'request_time',
     ];
@@ -27,9 +27,9 @@ class LadderPostEnrollment extends Model
         'created_at' => 'date:d M, Y H:i',
     ];
 
-    public function user()
+    public function team()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Team::class, 'team_id', 'id');
     }
 
     public function ladder_post()

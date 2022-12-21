@@ -32,7 +32,7 @@ class LadderPostEnrollmentController extends Controller
     {
         $ladder_requests = LadderPostEnrollment::where('ladder_post_id', $request->ladder_post_id)
             ->where('status', 'PENDING')
-            ->with(['team', 'ladder_post.game'])->get();
+            ->with(['team', 'ladder_post.game', 'ladder_post.host'])->get();
         return response($ladder_requests, 200);
     }
 

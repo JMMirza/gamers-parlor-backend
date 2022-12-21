@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\LadderPost;
 use App\Models\Platform;
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LadderController extends Controller
 {
@@ -41,10 +43,11 @@ class LadderController extends Controller
     {
         $platforms = Platform::where('status_id', 1)->get();
         $games = Game::where('status_id', 1)->get();
-
+        $teams = Team::where('user_id', Auth::user()->id)->get();
         $data = [
             'platforms' => $platforms,
-            'games' => $games
+            'games' => $games,
+            'teams' => $teams,
         ];
 
         return response($data, 200);

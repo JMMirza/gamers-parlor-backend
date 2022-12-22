@@ -14,7 +14,7 @@ class LadderPostEnrollmentController extends Controller
         $request->validate([
             'ladder_post_id' => 'required|integer',
             'team_id' => 'required|integer',
-            'request_time' => 'required',
+            // 'request_time' => 'required',
         ]);
         // $ladder_post  = WagerPost::find($request->ladder_post_id);
         // $ladder_post->status = 'PENDING';

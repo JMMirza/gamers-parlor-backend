@@ -25,11 +25,13 @@ class LadderController extends Controller
             // dd("hello");s
             $ladders = LadderPost::with(['host', 'game', 'platform'])
                 ->where('host_id', $request->user()->id)
+                // ->where('status', 'PENDING')
                 ->offset($start)->limit($this->per_page_limit)
                 ->latest()->get();
         } else {
             $ladders = LadderPost::with(['host', 'game', 'platform'])
                 ->where('host_id', '!=', $request->user()->id)
+                ->where('status', 'PENDING')
                 ->offset($start)->limit($this->per_page_limit)->latest()->get();
         }
         $platforms = Platform::where('status_id', 1)->get();
@@ -68,6 +70,7 @@ class LadderController extends Controller
 
         $input = $request->all();
         $input['host_id'] = $request->user()->id;
+        $input['status'] = 'PENDING';
         $data = LadderPost::create($input);
         return response($data, 200);
     }

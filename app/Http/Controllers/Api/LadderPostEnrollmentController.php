@@ -29,7 +29,7 @@ class LadderPostEnrollmentController extends Controller
             ];
             return response($data, 200);
         }
-        return response(['message' => 'Not Enough Credits'], 200);
+        return response(['message' => 'Not Enough Credits'], 400);
     }
 
     public function getLadderPostEnrollment(Request $request)

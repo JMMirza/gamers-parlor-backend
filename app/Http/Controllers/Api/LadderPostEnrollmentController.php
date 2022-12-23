@@ -17,7 +17,7 @@ class LadderPostEnrollmentController extends Controller
             // 'request_time' => 'required',
         ]);
         $ladder_post = LadderPost::where('id', $request->ladder_post_id)->first();
-        if (Auth::user()->balance >= $ladder_post->fee) {
+        if ($request->user()->balance >= $ladder_post->fee) {
             $input  = $request->all();
             $input['status'] = 'ACCEPTED';
 

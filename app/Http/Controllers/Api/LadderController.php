@@ -28,7 +28,8 @@ class LadderController extends Controller
                 ->offset($start)->limit($this->per_page_limit)
                 ->latest()->get();
         } else {
-            $ladders = LadderPost::with(['host', 'game', 'platform'])->where('host_id', '!=', $request->user()->id)
+            $ladders = LadderPost::with(['host', 'game', 'platform'])
+                ->where('host_id', '!=', $request->user()->id)
                 ->offset($start)->limit($this->per_page_limit)->latest()->get();
         }
         $platforms = Platform::where('status_id', 1)->get();

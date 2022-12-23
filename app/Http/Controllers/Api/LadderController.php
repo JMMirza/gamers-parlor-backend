@@ -44,10 +44,12 @@ class LadderController extends Controller
         $platforms = Platform::where('status_id', 1)->get();
         $games = Game::where('status_id', 1)->get();
         $teams = Team::where('user_id', Auth::user()->id)->get();
+        $credits = Auth::user()->balance;
         $data = [
             'platforms' => $platforms,
             'games' => $games,
             'teams' => $teams,
+            'credits' => $credits,
         ];
 
         return response($data, 200);

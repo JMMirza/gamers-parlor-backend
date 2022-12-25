@@ -108,7 +108,7 @@ class GameController extends Controller
         $statuses = Status::all();
         $platforms  = Platform::where('status_id', 1)->get();
         // dd($game->toArray());
-        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses, 'platforms ' => $platforms]);
+        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses, 'platforms' => $platforms]);
     }
 
     /**

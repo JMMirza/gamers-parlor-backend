@@ -16,6 +16,7 @@ class Game extends Model
         'logo',
         'vip_logo',
         'status_id',
+        'platform_id',
         'description',
     ];
 
@@ -36,6 +37,11 @@ class Game extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id', 'id');
+    }
+
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class, 'platform_id', 'id');
     }
 
     public function getLogoUrlAttribute()

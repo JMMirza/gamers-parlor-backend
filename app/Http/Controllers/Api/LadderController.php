@@ -65,7 +65,7 @@ class LadderController extends Controller
             'game_id' => 'required|integer',
             'team_id' => 'required|integer',
             'fee' => 'required',
-            'start_date' => 'required',
+            // 'start_date' => 'required',
         ]);
 
         $input = $request->all();

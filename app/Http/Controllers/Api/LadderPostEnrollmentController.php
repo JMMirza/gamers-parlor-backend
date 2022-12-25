@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\LadderPost;
 use App\Models\LadderPostEnrollment;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LadderPostEnrollmentController extends Controller
@@ -18,9 +19,11 @@ class LadderPostEnrollmentController extends Controller
         ]);
         $ladder_post = LadderPost::where('id', $request->ladder_post_id)->first();
         if ($request->user()->balance >= $ladder_post->fee) {
+            $loggedInUser = User::where('id', $request->user()->id)->first();
+            $loggedInUser->balance = $loggedInUser->balance - $ladder_post->fee;
+            $loggedInUser->save();
             $input  = $request->all();
             $input['status'] = 'ACCEPTED';
-
             $request = LadderPostEnrollment::create($input);
             $ladder_post->status = 'On going';
             $ladder_post->save();

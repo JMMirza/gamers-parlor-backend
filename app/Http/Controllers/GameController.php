@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Platform;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -20,7 +21,7 @@ class GameController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Game::with('status')->get();
+            $data = Game::with(['status', 'platform'])->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
@@ -32,7 +33,9 @@ class GameController extends Controller
                 ->rawColumns(['action', 'status'])
                 ->make(true);
         }
-        return view('games.games');
+        $platforms = Platform::where('status_id', 1)->get();
+
+        return view('games.games', ['platforms' => $platforms]);
     }
 
     /**
@@ -104,8 +107,9 @@ class GameController extends Controller
     public function edit(Game $game)
     {
         $statuses = Status::all();
+        $platfroms = Platform::all();
         // dd($game->toArray());
-        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses]);
+        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses, 'platfroms' => $platfroms]);
     }
 
     /**

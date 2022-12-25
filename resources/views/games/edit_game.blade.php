@@ -34,6 +34,29 @@
 
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-label-group in-border">
+                                    <select class="form-select form-control mb-3" name="platform_id" id="statusID"
+                                        required>
+                                        <option value="" disabled>Please select</option>
+                                        @foreach ($platforms as $platform)
+                                            <option value="{{ $platform->id }}"
+                                                @if ($game->platform_id == $platform->id) {{ 'selected' }} @endif>
+                                                {{ $platform->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label for="statusID" class="form-label fs-5 fs-lg-1">Platforms</label>
+                                    <div class="invalid-tooltip">
+                                        @if ($errors->has('platform_id'))
+                                            {{ $errors->first('platform_id') }}
+                                        @else
+                                            Please select platforms.
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="form-label-group in-border">
                                     <select class="form-select @if ($errors->has('status_id')) is-invalid @endif"
                                         id="status_id" name="status_id" aria-label="Please select" required>
                                         <option value="">Please select</option>

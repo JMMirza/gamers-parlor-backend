@@ -40,7 +40,7 @@
                                         @foreach ($platforms as $platform)
                                             <option value="{{ $platform->id }}"
                                                 @if ($game->platform_id == $platform->id) {{ 'selected' }} @endif>
-                                                {{ $platform->name }}
+                                                {{ $platform->title }}
                                             </option>
                                         @endforeach
                                     </select>

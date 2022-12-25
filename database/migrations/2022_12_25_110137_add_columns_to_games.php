@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('games', function (Blueprint $table) {
-            $table->unsignedBigInteger('platform_id')->nullable()->after();
+            $table->unsignedBigInteger('platform_id')->nullable()->after('status_id');
             $table->foreign('platform_id')->references('id')->on('platforms');
         });
     }

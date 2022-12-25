@@ -33,9 +33,7 @@ class GameController extends Controller
                 ->rawColumns(['action', 'status'])
                 ->make(true);
         }
-        $platforms = Platform::where('status_id', 1)->get();
-
-        return view('games.games', ['platforms' => $platforms]);
+        return view('games.games');
     }
 
     /**
@@ -46,7 +44,8 @@ class GameController extends Controller
     public function create()
     {
         $statuses = Status::all();
-        return view('games.add_game', ['statuses' => $statuses]);
+        $platforms = Platform::where('status_id', 1)->get();
+        return view('games.add_game', ['statuses' => $statuses, 'platforms' => $platforms]);
     }
 
     /**
@@ -107,9 +106,9 @@ class GameController extends Controller
     public function edit(Game $game)
     {
         $statuses = Status::all();
-        $platfroms = Platform::all();
+        $platforms  = Platform::where('status_id', 1)->get();
         // dd($game->toArray());
-        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses, 'platfroms' => $platfroms]);
+        return view('games.edit_game', ['game' => $game, 'statuses' => $statuses, 'platforms ' => $platforms]);
     }
 
     /**

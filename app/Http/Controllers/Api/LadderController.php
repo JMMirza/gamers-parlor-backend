@@ -33,7 +33,7 @@ class LadderController extends Controller
         } elseif ($matchCategory == 'challenges') {
             $user_teams = TeamMember::where('user_id', $request->user()->id)->pluck('team_id');
             $ladders = LadderPostEnrollment::whereIn('team_id', $user_teams)
-                ->with(['team', 'ladder_post'])
+                ->with(['team', 'ladder_post.game'])
                 ->get();
             // dd($ladders);
         } else {

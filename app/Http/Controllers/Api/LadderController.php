@@ -8,6 +8,7 @@ use App\Models\LadderPost;
 use App\Models\LadderPostEnrollment;
 use App\Models\Platform;
 use App\Models\Team;
+use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +31,7 @@ class LadderController extends Controller
                 ->offset($start)->limit($this->per_page_limit)
                 ->latest()->get();
         } elseif ($matchCategory == 'challenges') {
-            $user_teams = Team::whereHas('team_members', function ($query) use ($request) {
-                $query->where('user_id', $request->user()->id);
-            })->get();
+            $user_teams = TeamMember::where('user_id', $request->user()->id)->pluck('team-id');
             $ladders = LadderPostEnrollment::whereIn('team_id', $user_teams)
                 ->with(['team', 'ladder_post'])
                 ->get();

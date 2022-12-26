@@ -36,7 +36,7 @@ class LadderController extends Controller
             $ladders = LadderPostEnrollment::whereIn('team_id', $user_teams)
                 ->with(['team', 'ladder_post'])
                 ->get();
-            dd($ladders);
+            // dd($ladders);
         } else {
             $ladders = LadderPost::with(['host', 'game', 'platform'])
                 ->where('host_id', '!=', $request->user()->id)

@@ -19,7 +19,7 @@ class LadderController extends Controller
     {
         $page_no = $request->page_no;
         $matchCategory = $request->matchCategory;
-
+        $user_teams = [];
         $page_no = (isset($page_no) && $page_no > 0) ? $page_no : 1;
         $start = ($page_no - 1) * $this->per_page_limit;
         if ($matchCategory == 'my_matches') {
@@ -45,6 +45,7 @@ class LadderController extends Controller
         }
         $platforms = Platform::where('status_id', 1)->get();
         $data = [
+            'user_teams' => $$user_teams,
             'ladders' => $ladders,
             'platforms' => $platforms
         ];

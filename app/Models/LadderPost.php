@@ -14,7 +14,7 @@ class LadderPost extends Model
         'game_id',
         'platform_id',
         'fee',
-        'start_date',
+        'start_time',
         'host_id',
         'team_id',
         'status',

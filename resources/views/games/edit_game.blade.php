@@ -14,7 +14,7 @@
                             method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <input type="text"
                                         class="form-control @if ($errors->has('title')) is-invalid @endif"
@@ -32,7 +32,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <select class="form-select form-control mb-3" name="platform_id" id="statusID"
                                         required>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <select class="form-select @if ($errors->has('status_id')) is-invalid @endif"
                                         id="status_id" name="status_id" aria-label="Please select" required>

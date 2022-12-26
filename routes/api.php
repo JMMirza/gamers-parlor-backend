@@ -31,12 +31,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-
+Route::get('/platform-games', [UserController::class, 'getGames']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/get-credits', [CreditController::class, 'getCredits']);
     Route::get('/get-subscription', [SubscriptionController::class, 'getSub']);
     Route::get('get-tournament-level-wise-matches', [TournamentController::class, 'levelWiseMatches']);
-    Route::get('upload-match-result', [TournamentController::class, 'uploadResult']);
+    Route::post('upload-match-result', [TournamentController::class, 'uploadResult']);
     Route::get('get-ladder-teams', [TeamController::class, 'listLadderTeams']);
     Route::get('list-tournaments', [TournamentController::class, 'tournamentsList']);
     Route::get('user-credits', [UserController::class, 'credits']);
@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('list-ladder-request', [LadderPostEnrollmentController::class, 'getLadderPostEnrollment']);
     Route::get('accept-ladder-request', [LadderPostEnrollmentController::class, 'acceptRequest']);
     Route::get('reject-ladder-request', [LadderPostEnrollmentController::class, 'rejectRequest']);
+    Route::post('upload-ladder-request', [LadderPostEnrollmentController::class, 'uploadLadderResult']);
     Route::post('update-profile', [UserController::class, 'updateProfile']);
     Route::post('create-team', [TeamController::class, 'createTeam']);
     Route::post('create-ladder-team', [TeamController::class, 'createLadderTeam']);

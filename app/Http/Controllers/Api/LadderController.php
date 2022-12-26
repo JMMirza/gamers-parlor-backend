@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
 use App\Models\LadderPost;
+use App\Models\LadderPostEnrollment;
 use App\Models\Platform;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -28,6 +29,14 @@ class LadderController extends Controller
                 // ->where('status', 'PENDING')
                 ->offset($start)->limit($this->per_page_limit)
                 ->latest()->get();
+        } elseif ($matchCategory == 'challenges') {
+            $user_teams = Team::whereHas('team_members', function ($query) use ($request) {
+                $query->where('user_id', $request->user()->id);
+            })->get();
+            $ladders = LadderPostEnrollment::whereIn('team_id', $user_teams)
+                ->with(['team', 'ladder_post'])
+                ->get();
+            dd($ladders);
         } else {
             $ladders = LadderPost::with(['host', 'game', 'platform'])
                 ->where('host_id', '!=', $request->user()->id)

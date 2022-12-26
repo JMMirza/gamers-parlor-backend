@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\LadderPost;
 use App\Models\LadderPostEnrollment;
+use App\Models\LadderPostResult;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class LadderPostEnrollmentController extends Controller
 {
@@ -68,5 +70,39 @@ class LadderPostEnrollmentController extends Controller
         $ladder_request->status = 'REJECTED';
         $ladder_request->save();
         return response('Rejected the request', 200);
+    }
+
+    public function uploadLadderResult(Request $request)
+    {
+        $request->validate([
+            'ladder_post_id' => 'required|integer',
+            'ladder_post_enrollment_id' => 'required|integer',
+            'winner_id' => 'required|integer',
+            'losser_id' => 'required|integer',
+            'proof' => 'required',
+        ]);
+
+        $input = $request->all();
+        $input['result'] = 'PENDING';
+
+        if ($request->proof) {
+            $path = public_path() . '/files/ladder_proofs/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+
+            $image_parts = explode(";base64,", $request->proof);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $imageName = uniqid() . time() . '.' . $request->proof->extension();
+            $imageFullPath = $path . $imageName;
+            file_put_contents($imageFullPath, $image_base64);
+            $input['proof'] = $imageName;
+        }
+        // dd($input);
+        $data = LadderPostResult::create($input);
+
+        return response($data, 200);
     }
 }

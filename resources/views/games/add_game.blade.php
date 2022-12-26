@@ -12,7 +12,7 @@
                         <form class="row g-3 needs-validation" novalidate action="{{ route('games.store') }}" method="post"
                             enctype="multipart/form-data" id="blogForm">
                             @csrf
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <input type="text"
                                         class="form-control @if ($errors->has('title')) is-invalid @endif"
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <select class="form-select form-control mb-3" name="platform_id" id="statusID"
                                         required>
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-4 col-sm-12">
                                 <div class="form-label-group in-border">
                                     <select class="form-select form-control mb-3" name="status_id" id="statusID" required>
                                         <option value="" disabled>Please select</option>

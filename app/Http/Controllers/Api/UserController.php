@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
+use App\Models\Game;
 use App\Models\User;
 use App\Models\UserCredit;
 use Illuminate\Http\Request;
@@ -70,9 +70,9 @@ class UserController extends Controller
         return $users;
     }
 
-    public function credits()
+    public function credits(Request $request)
     {
-        $credits = UserCredit::where('user_id', \Auth::user()->id)->with(['user', 'transaction', 'coin'])
+        $credits = UserCredit::where('user_id', $request->user()->id)->with(['user', 'transaction', 'coin'])
             ->whereHas('transaction', function ($q) {
                 $q->where('status', 'COMPLETE');
             })->get();
@@ -82,5 +82,11 @@ class UserController extends Controller
             $amount = $credit->coin->credit + $amount;
         }
         return response($amount, 200);
+    }
+
+    public function getGames(Request $request)
+    {
+        $games = Game::where('platform_id', $request->platform_id)->get();
+        return response($games, 200);
     }
 }

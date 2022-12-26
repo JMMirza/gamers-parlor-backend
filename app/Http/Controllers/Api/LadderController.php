@@ -45,7 +45,7 @@ class LadderController extends Controller
         }
         $platforms = Platform::where('status_id', 1)->get();
         $data = [
-            'user_teams' => $$user_teams,
+            'user_teams' => $user_teams,
             'ladders' => $ladders,
             'platforms' => $platforms
         ];

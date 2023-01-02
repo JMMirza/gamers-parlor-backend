@@ -15,6 +15,7 @@ class LadderPost extends Model
         'platform_id',
         'fee',
         'start_time',
+        'challenger_id',
         'host_id',
         'team_id',
         'status',
@@ -45,6 +46,11 @@ class LadderPost extends Model
         return $this->belongsTo(User::class, 'host_id', 'id');
     }
 
+    public function challenger()
+    {
+        return $this->belongsTo(User::class, 'challenger_id', 'id');
+    }
+
     public function game()
     {
         return $this->belongsTo(Game::class, 'game_id', 'id');
@@ -58,6 +64,21 @@ class LadderPost extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');
+    }
+
+    public function challenger_team()
+    {
+        return $this->belongsTo(Team::class, 'challenger_team_id', 'id');
+    }
+
+    public function winner_team()
+    {
+        return $this->belongsTo(Team::class, 'winner_team_id', 'id');
+    }
+
+    public function losser_team()
+    {
+        return $this->belongsTo(Team::class, 'losser_team_id', 'id');
     }
 
     public function ladder_enrollments()

@@ -26,6 +26,7 @@ class LadderPostEnrollmentController extends Controller
             $loggedInUser->save();
 
             $ladder_post->challenger_team_id = $request->team_id;
+            $ladder_post->challenger_id = $request->user()->id;
             $ladder_post->status = 'Challenged';
             $ladder_post->save();
 
@@ -76,13 +77,19 @@ class LadderPostEnrollmentController extends Controller
     {
         $request->validate([
             'ladder_post_id' => 'required|integer',
-            'winner_id' => 'required|integer',
-            'losser_id' => 'required|integer',
             'proof' => 'required',
         ]);
+        $winner_id = $losser_id = 0;
         $ladder_post = LadderPost::where('id', $request->ladder_post_id)->first();
-        $ladder_post->winner_team_id = $request->winner_id;
-        $ladder_post->losser_team_id = $request->losser_id;
+        if ($request->user()->id == $ladder_post->host_id) {
+            $winner_id = $ladder_post->team_id;
+            $losser_id = $ladder_post->challenger_team_id;
+        } else {
+            $losser_id = $ladder_post->team_id;
+            $winner_id = $ladder_post->challenger_team_id;
+        }
+        $ladder_post->winner_team_id = $winner_id;
+        $ladder_post->losser_team_id = $losser_id;
         $ladder_post->result_status = 'PENDING';
 
         if ($request->proof) {

@@ -24,13 +24,13 @@ class LadderPostEnrollmentController extends Controller
             $loggedInUser = User::where('id', $request->user()->id)->first();
             $loggedInUser->balance = $loggedInUser->balance - $ladder_post->fee;
             $loggedInUser->save();
-            $input  = $request->all();
-            $input['status'] = 'ACCEPTED';
-            $request = LadderPostEnrollment::create($input);
-            $ladder_post->status = 'On going';
+
+            $ladder_post->challenger_team_id = $request->team_id;
+            $ladder_post->status = 'Challenged';
             $ladder_post->save();
+
             $data = [
-                'request' => $request
+                'request' => $ladder_post
             ];
             return response($data, 200);
         }
@@ -76,14 +76,14 @@ class LadderPostEnrollmentController extends Controller
     {
         $request->validate([
             'ladder_post_id' => 'required|integer',
-            'ladder_post_enrollment_id' => 'required|integer',
             'winner_id' => 'required|integer',
             'losser_id' => 'required|integer',
             'proof' => 'required',
         ]);
-
-        $input = $request->all();
-        $input['result'] = 'PENDING';
+        $ladder_post = LadderPost::where('id', $request->ladder_post_id)->first();
+        $ladder_post->winner_team_id = $request->winner_id;
+        $ladder_post->losser_team_id = $request->losser_id;
+        $ladder_post->result_status = 'PENDING';
 
         if ($request->proof) {
             $path = public_path() . '/files/ladder_proofs/';
@@ -98,11 +98,11 @@ class LadderPostEnrollmentController extends Controller
             $imageName = uniqid() . time() . '.' . $request->proof->extension();
             $imageFullPath = $path . $imageName;
             file_put_contents($imageFullPath, $image_base64);
-            $input['proof'] = $imageName;
+            $ladder_post->wining_proof = $imageName;
         }
         // dd($input);
-        $data = LadderPostResult::create($input);
 
+        $data = $ladder_post->save();
         return response($data, 200);
     }
 }

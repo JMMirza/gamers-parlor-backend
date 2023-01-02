@@ -18,13 +18,21 @@ class LadderPost extends Model
         'host_id',
         'team_id',
         'status',
-        'terms_and_condition'
+        'terms_and_condition',
+        'challenger_team_id',
+        'winner_team_id',
+        'losser_team_id',
+        'wining_proof',
     ];
 
     protected $dates = [
 
         'created_at',
         'updated_at',
+    ];
+
+    protected $appends = [
+        'wining_proof_url',
     ];
 
     protected $casts = [
@@ -54,5 +62,16 @@ class LadderPost extends Model
     public function ladder_enrollments()
     {
         return $this->hasMany(LadderPostEnrollment::class);
+    }
+
+    public function getWinningProofUrlAttribute()
+    {
+        $image = asset('images/demo.jpg');
+
+        if (!empty($this->wining_proof) && file_exists('uploads/ladder_proofs/' . $this->wining_proof)) {
+            $image = asset('uploads/ladder_proofs/' . $this->wining_proof);
+        }
+
+        return $image;
     }
 }

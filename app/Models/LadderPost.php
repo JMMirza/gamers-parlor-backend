@@ -23,6 +23,7 @@ class LadderPost extends Model
         'winner_team_id',
         'losser_team_id',
         'wining_proof',
+        'result_status',
     ];
 
     protected $dates = [
@@ -64,7 +65,7 @@ class LadderPost extends Model
         return $this->hasMany(LadderPostEnrollment::class);
     }
 
-    public function getWinningProofUrlAttribute()
+    public function getWiningProofUrlAttribute()
     {
         $image = asset('images/demo.jpg');
 

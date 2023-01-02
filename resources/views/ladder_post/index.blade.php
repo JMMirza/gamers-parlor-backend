@@ -23,9 +23,9 @@
                                 <th>ID</th>
                                 <th>Game</th>
                                 <th>Platform</th>
-                                <th>Start Date</th>
+                                {{-- <th>Start Date</th> --}}
                                 <th>Fee</th>
-                                {{-- <th>Status</th> --}}
+                                <th>Status</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
@@ -38,9 +38,9 @@
                                 <th>ID</th>
                                 <th>Game</th>
                                 <th>Platform</th>
-                                <th>Start Date</th>
+                                {{-- <th>Start Date</th> --}}
                                 <th>Fee</th>
-                                {{-- <th>Status</th> --}}
+                                <th>Status</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
@@ -87,21 +87,21 @@
                         name: 'platform.title',
                         width: "25%"
                     },
-                    {
-                        data: 'start_date',
-                        name: 'start_date',
-                        width: "20%"
-                    },
+                    // {
+                    //     data: 'start_date',
+                    //     name: 'start_date',
+                    //     width: "20%"
+                    // },
                     {
                         data: 'fee',
                         name: 'fee',
                         width: "20%"
                     },
-                    // {
-                    //     data: 'status',
-                    //     name: 'status',
-                    //     width: "20%"
-                    // },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        width: "20%"
+                    },
                     {
                         data: 'created_at',
                         name: 'created_at',

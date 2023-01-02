@@ -6,6 +6,7 @@ use App\Models\LadderPost;
 use App\Models\Game;
 use App\Models\Platform;
 use App\Models\Status;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -138,5 +139,24 @@ class LadderPostController extends Controller
         } catch (QueryException $e) {
             print_r($e->errorInfo);
         }
+    }
+
+    public function ladderDetail($id)
+    {
+        $ladderPost = LadderPost::where('id', $id)->with(['team', 'challenger_team'])->first();
+        // dd($ladderPost->toArray());
+        return view('ladder_post.ladder_detail', ['ladder_post' => $ladderPost]);
+    }
+
+    public function ladderResultApprove(Request $request)
+    {
+        $ladder_post = LadderPost::where('id', $request->ladder_id)->first();
+        $ladder_post->result_status = 'COMPLETED';
+        $ladder_post->save();
+        $team = Team::where('id', $ladder_post->winner_team_id)->first();
+        $team->score = $team->score + $request->score;
+        $team->save();
+        return redirect()->route('ladder-post.index')
+            ->with('success', 'Result updated successfully.');
     }
 }

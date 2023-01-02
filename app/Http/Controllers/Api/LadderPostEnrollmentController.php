@@ -91,6 +91,7 @@ class LadderPostEnrollmentController extends Controller
         $ladder_post->winner_team_id = $winner_id;
         $ladder_post->losser_team_id = $losser_id;
         $ladder_post->result_status = 'PENDING';
+        $ladder_post->status = 'COMPLETED';
 
         if ($request->proof) {
             $path = public_path() . '/files/ladder_proofs/';

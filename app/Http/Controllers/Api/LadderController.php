@@ -9,6 +9,7 @@ use App\Models\LadderPostEnrollment;
 use App\Models\Platform;
 use App\Models\Team;
 use App\Models\TeamMember;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Ui\Presets\React;
@@ -77,12 +78,18 @@ class LadderController extends Controller
             'fee' => 'required',
             // 'start_date' => 'required',
         ]);
+        if ($request->user()->balance > $request->fee) {
+            $loggedInUser = User::where('id', $request->user()->id)->first();
+            $loggedInUser->balance = $loggedInUser->balance - $request->fee;
+            $loggedInUser->save();
 
-        $input = $request->all();
-        $input['host_id'] = $request->user()->id;
-        $input['status'] = 'PENDING';
-        $data = LadderPost::create($input);
-        return response($data, 200);
+            $input = $request->all();
+            $input['host_id'] = $request->user()->id;
+            $input['status'] = 'PENDING';
+            $data = LadderPost::create($input);
+            return response($data, 200);
+        }
+        return response(['message' => 'Not Enough Credits'], 400);
     }
 
     public function listMatches(Request $request)

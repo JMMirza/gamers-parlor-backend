@@ -81,7 +81,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/transactions', [UserController::class, 'transactions'])->name('transactions');
     Route::get('/accept-transaction/{id}', [UserController::class, 'accept_transaction'])->name('accept-transaction');
     Route::get('/reject-transaction/{id}', [UserController::class, 'reject_transaction'])->name('reject-transaction');
-
+    Route::get('ladder-details/{id}', [LadderPostController::class, 'ladderDetail'])->name('ladder-details');
+    Route::post('ladder-post-approve-result', [LadderPostController::class, 'ladderResultApprove'])->name('ladder-post-approve-result');
     Route::get('/subscription-transactions', [UserController::class, 'subscription_transactions'])->name('subscription-transactions');
     Route::get('/accept-sub-transaction/{id}', [UserController::class, 'accept_sub_transaction'])->name('accept-sub-transaction');
     Route::get('/reject-sub-transaction/{id}', [UserController::class, 'reject_sub_transaction'])->name('reject-sub-transaction');

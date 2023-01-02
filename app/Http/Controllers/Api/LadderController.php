@@ -33,9 +33,13 @@ class LadderController extends Controller
                 ->offset($start)->limit($this->per_page_limit)
                 ->latest()->get();
         } elseif ($matchCategory == 'challenges') {
-            $user_teams = TeamMember::where('user_id', $request->user()->id)->pluck('team_id');
-            $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)->orWhereIn('team_id', $user_teams)
-                ->with(['game', 'platform'])
+            $user_teams = TeamMember::where('user_id', $request->user()->id)->whereHas('team', function ($q) {
+                $q->where('is_ladder', 1);
+            })->pluck('team_id');
+            $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)
+                ->orWhere(function ($query) use ($user_teams) {
+                    $query->whereIn('team_id', $user_teams);
+                })->with(['game', 'platform'])
                 ->get();
             // dd($ladders);
         } else {
@@ -57,7 +61,7 @@ class LadderController extends Controller
     {
         $platforms = Platform::where('status_id', 1)->get();
         $games = Game::where('status_id', 1)->get();
-        $teams = Team::where('user_id', Auth::user()->id)->get();
+        $teams = Team::where('user_id', Auth::user()->id)->where('is_ladder', 1)->get();
         $credits = Auth::user()->balance;
         $data = [
             'platforms' => $platforms,

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('losser_team_id')->references('id')->on('teams');
 
             $table->string('wining_proof')->nullable();
-            $table->string('result_status')->nullable();
+            // $table->string('result_status')->nullable();
         });
     }
 
@@ -48,6 +48,7 @@ return new class extends Migration
             $table->dropForeign('ladder_posts_losser_team_id_foreign');
             $table->dropColumn('losser_team_id');
             $table->dropColumn('wining_proof');
+            $table->dropColumn('result_status');
         });
     }
 };

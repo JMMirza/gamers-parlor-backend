@@ -34,7 +34,7 @@ class LadderController extends Controller
                 ->latest()->get();
         } elseif ($matchCategory == 'challenges') {
             $user_teams = TeamMember::where('user_id', $request->user()->id)->pluck('team_id');
-            $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)
+            $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)->orWhereIn('team_id', $user_teams)
                 ->with(['game', 'platform'])
                 ->get();
             // dd($ladders);

@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\TeamMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class LadderController extends Controller
 {
@@ -106,6 +107,22 @@ class LadderController extends Controller
         $data = [
             'ladders' => $ladders,
             'platforms' => $platforms
+        ];
+        return response($data, 200);
+    }
+
+    public function teamMatchesList(Request $request)
+    {
+        $ladders_data = LadderPost::with(['host', 'game', 'platform'])
+            ->where('team_id', $request->team_id)->orWhere('challenger_team_id', $request->team_id)->latest()->get();
+
+        $count_wins = LadderPost::where('winner_team_id', $request->team_id)->count();
+        $count_losses = LadderPost::where('losser_team_id', $request->team_id)->count();
+
+        $data = [
+            'count_wins' => $count_wins,
+            'count_losses' => $count_losses,
+            'ladders_data' => $ladders_data
         ];
         return response($data, 200);
     }

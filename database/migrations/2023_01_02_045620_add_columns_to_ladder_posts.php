@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('losser_team_id')->references('id')->on('teams');
 
             $table->string('wining_proof')->nullable();
-            // $table->string('result_status')->nullable();
+            $table->string('result_status')->nullable();
         });
     }
 

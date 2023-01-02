@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('create-ladder-post-request', [LadderPostEnrollmentController::class, 'createRequest']);
     Route::post('create-wager-post', [WagerController::class, 'createWager']);
     Route::post('create-ladder-post', [LadderController::class, 'createLadder']);
+    Route::post('list-team-matches', [LadderController::class, 'teamMatchesList']);
     Route::post('get-team-data', [TeamController::class, 'getTeamData']);
     Route::post('create-team-member', [TeamController::class, 'createTeamMember']);
     Route::post('create-tournament', [TournamentController::class, 'createTournament']);

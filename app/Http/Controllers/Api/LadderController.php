@@ -37,9 +37,7 @@ class LadderController extends Controller
                 $q->where('is_ladder', 1);
             })->pluck('team_id');
             $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)
-                ->orWhere(function ($query) use ($user_teams) {
-                    $query->whereIn('team_id', $user_teams);
-                })->with(['game', 'platform'])
+                ->orWhereIn('team_id', $user_teams)->with(['game', 'platform'])
                 ->get();
             // dd($ladders);
         } else {

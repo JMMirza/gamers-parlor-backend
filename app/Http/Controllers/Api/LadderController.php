@@ -28,23 +28,27 @@ class LadderController extends Controller
         if ($matchCategory == 'my_matches') {
             // dd("hello");s
             $ladders = LadderPost::with(['host', 'game', 'platform'])
-                ->where('host_id', $request->user()->id)
-                // ->where('status', 'PENDING')
-                ->offset($start)->limit($this->per_page_limit)
-                ->latest()->get();
+                ->where('host_id', $request->user()->id);
+            // ->where('status', 'PENDING');
         } elseif ($matchCategory == 'challenges') {
             $user_teams = TeamMember::where('user_id', $request->user()->id)->whereHas('team', function ($q) {
                 $q->where('is_ladder', 1);
             })->pluck('team_id');
             $ladders = LadderPost::whereIn('challenger_team_id', $user_teams)
-                ->orWhereIn('team_id', $user_teams)->with(['game', 'platform'])
-                ->get();
+                ->orWhereIn('team_id', $user_teams)->with(['game', 'platform']);
             // dd($ladders);
         } else {
             $ladders = LadderPost::with(['host', 'game', 'platform'])
                 ->where('host_id', '!=', $request->user()->id)
-                ->where('status', 'PENDING')
-                ->offset($start)->limit($this->per_page_limit)->latest()->get();
+                ->where('status', 'PENDING');
+        }
+        if ($request->platform_id) {
+            $ladders = $ladders->where('platform_id', $request->platform_id)
+                ->offset($start)->limit($this->per_page_limit)
+                ->latest()->get();
+        } else {
+            $ladders = $ladders->offset($start)->limit($this->per_page_limit)
+                ->latest()->get();
         }
         $platforms = Platform::where('status_id', 1)->get();
         $data = [

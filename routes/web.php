@@ -20,6 +20,7 @@ use App\Http\Controllers\LadderPostController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SubscriptionPriceController;
+use App\Http\Controllers\SystemNotificationController;
 use App\Http\Controllers\TournamentLevelController;
 use App\Http\Controllers\TournamentLevelMatchResultController;
 
@@ -86,4 +87,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/subscription-transactions', [UserController::class, 'subscription_transactions'])->name('subscription-transactions');
     Route::get('/accept-sub-transaction/{id}', [UserController::class, 'accept_sub_transaction'])->name('accept-sub-transaction');
     Route::get('/reject-sub-transaction/{id}', [UserController::class, 'reject_sub_transaction'])->name('reject-sub-transaction');
+    Route::post('/store-token', [SystemNotificationController::class, 'storeToken'])->name('store.token');
+    Route::post('/send-web-notification', [SystemNotificationController::class, 'sendWebNotification'])->name('send.web-notification');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\FcmToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -44,7 +45,7 @@ class AuthController extends Controller
         ]);
 
         // Check email
-        $user = User::where('email', $fields['email'])->with('game_tags')->first();
+        $user = User::where('email', $fields['email'])->with('game_tags.platform')->first();
 
         // Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
@@ -61,6 +62,20 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function storeToken(Request $request)
+    {
+        $user_id = $request->user()->id;
+        $token = FcmToken::where(['user_id' => $user_id, 'device_key' => $request->token])->get();
+        if ($token)
+            return response()->json(['Token already exists']);
+        FcmToken::create([
+            'user_id' => $user_id,
+            'device_key' => $request->token,
+            'device_name' => $request->device_name,
+        ]);
+        return response()->json(['Token successfully stored.']);
     }
 
     public function logout(Request $request)

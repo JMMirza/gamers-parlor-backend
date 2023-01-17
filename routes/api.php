@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\TournamentController;
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UserGamerTagController;
 use App\Http\Controllers\Api\WagerController;
 use App\Http\Controllers\Api\WagerPostRequestController;
 
@@ -33,6 +34,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/platform-games', [UserController::class, 'getGames']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('store-gamer-tag', [UserGamerTagController::class, 'storeTag']);
+    Route::post('/save-token', [AuthController::class, 'storeToken']);
     Route::get('/get-credits', [CreditController::class, 'getCredits']);
     Route::get('/get-subscription', [SubscriptionController::class, 'getSub']);
     Route::get('get-tournament-level-wise-matches', [TournamentController::class, 'levelWiseMatches']);

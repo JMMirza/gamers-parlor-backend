@@ -104,4 +104,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserGamerTag::class);
     }
+
+    public function fcm_tokens()
+    {
+        return $this->hasMany(SystemNotification::class);
+    }
 }

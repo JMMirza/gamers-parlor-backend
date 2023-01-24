@@ -224,13 +224,17 @@ class TeamController extends Controller
 
     public function acceptInvite(Request $request)
     {
-        $data = TeamMember::where('id', $request->id)->update('status_id', 3);
+        $data = TeamMember::where('id', $request->id)->first();
+        $data->status_id = 3;
+        $data->save();
         return response($data, 200);
     }
 
     public function rejectInvite(Request $request)
     {
-        $data = TeamMember::where('id', $request->id)->update('status_id', 4);
+        $data = TeamMember::where('id', $request->id)->first();
+        $data->status_id = 4;
+        $data->save();
         return response($data, 200);
     }
 

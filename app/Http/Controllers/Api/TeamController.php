@@ -185,7 +185,8 @@ class TeamController extends Controller
         TeamMember::create([
             'user_id' => $request->user()->id,
             'team_id' => $team->id,
-            'role' => 'Captain'
+            'role' => 'Captain',
+            'status_id' => '3'
         ]);
         // array_push($request->players, $request->user());
         foreach ($request->players as  $player) {
@@ -195,7 +196,7 @@ class TeamController extends Controller
                 'role' => 'Player',
                 'status_id' => '5'
             ]);
-            $this->sendNotification($request->user()->id, 'Invitation', 'You are being invited to be a part of the team' + $team->name);
+            $this->sendNotification($player['id'], 'Invitation', 'You are being invited to be a part of the team' + $team->name);
         }
         return response($team, 200);
     }

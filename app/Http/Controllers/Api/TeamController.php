@@ -14,6 +14,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Laravel\Ui\Presets\React;
+use App\Notifications\SendPushNotification;
 
 class TeamController extends Controller
 {
@@ -196,7 +197,8 @@ class TeamController extends Controller
                 'role' => 'Player',
                 'status_id' => '5'
             ]);
-            $this->sendNotification($player['id'], 'Invitation', 'You are being invited to be a part of the team' + $team->name);
+
+            $this->sendNotification($player['id'], 'Invitation', 'You are being invited to be a part of the team' . $team->name);
         }
         return response($team, 200);
     }
@@ -241,50 +243,7 @@ class TeamController extends Controller
 
     private function sendNotification($user_id, $title, $body)
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
-        $FcmToken = FcmToken::with('user')->pluck('device_key')->all();
-
-        $serverKey = 'AAAAi8oDbGQ:APA91bGpy_pqcLowuZAfbmLUezQuWPpoI9Xbs2N9ebsSp0qhwWVwYgVEun1bAchyELIW72ur0XOtLgqe5H8qdoRGW266_OUZlHnHVNa_ov-xek0pOaz6O-fBs9GByy4xFHegatPZ8U1U';
-
-        $data = [
-            "registration_ids" => $FcmToken,
-            "notification" => [
-                "title" => $title,
-                "body" => $body,
-            ]
-        ];
-        $encodedData = json_encode($data);
-
-        $headers = [
-            'Authorization:key=' . $serverKey,
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        // Disabling SSL Certificate support temporarly
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
-        // Execute post
-        $result = curl_exec($ch);
-        if ($result === FALSE) {
-            die('Curl failed: ' . curl_error($ch));
-        }
-        // Close connection
-        curl_close($ch);
-        // FCM response
-        SystemNotification::create([
-            'user_id' => $user_id,
-            'title' => $title,
-            'description' => $body,
-            'status' => 'sent'
-        ]);
-        return $result;
+        $user = User::findOrFail($user_id);
+        $user->notify(new SendPushNotification($title, $body));
     }
 }

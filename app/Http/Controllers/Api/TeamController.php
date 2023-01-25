@@ -185,16 +185,18 @@ class TeamController extends Controller
         TeamMember::create([
             'user_id' => $request->user()->id,
             'team_id' => $team->id,
-            'role' => 'Captain'
+            'role' => 'Captain',
+            'status_id' => '3'
         ]);
         // array_push($request->players, $request->user());
         foreach ($request->players as  $player) {
             TeamMember::create([
                 'user_id' => $player['id'],
                 'team_id' => $team->id,
-                'role' => 'Player'
+                'role' => 'Player',
+                'status_id' => '5'
             ]);
-            $this->sendNotification($request->user()->id, 'Invitation', 'You are being invited to be a part of the team' + $team->name);
+            $this->sendNotification($player['id'], 'Invitation', 'You are being invited to be a part of the team' + $team->name);
         }
         return response($team, 200);
     }
@@ -211,6 +213,29 @@ class TeamController extends Controller
             ->limit($this->per_page_limit)
             ->get();
 
+        return response($data, 200);
+    }
+
+    public function getInvites(Request $request)
+    {
+        $user = $request->user();
+        $data = TeamMember::where('user_id', $user->id)->with(['user', 'status', 'team'])->get();
+        return response($data, 200);
+    }
+
+    public function acceptInvite(Request $request)
+    {
+        $data = TeamMember::where('id', $request->id)->first();
+        $data->status_id = 3;
+        $data->save();
+        return response($data, 200);
+    }
+
+    public function rejectInvite(Request $request)
+    {
+        $data = TeamMember::where('id', $request->id)->first();
+        $data->status_id = 4;
+        $data->save();
         return response($data, 200);
     }
 

@@ -78,6 +78,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('create-tournament', [TournamentController::class, 'createTournament']);
     Route::post('create-transaction', [TransactionController::class, 'createTransaction']);
     Route::post('create-credit', [CreditController::class, 'createCredit']);
+    Route::get('get-team-invites', [TeamController::class, 'getInvites']);
+    Route::get('accept-team-invites', [TeamController::class, 'acceptInvite']);
+    Route::get('reject-team-invites', [TeamController::class, 'rejectInvite']);
     Route::post('purchase-subscription', [SubscriptionController::class, 'purchaseSubscription']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

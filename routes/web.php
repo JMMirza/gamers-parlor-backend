@@ -24,6 +24,7 @@ use App\Http\Controllers\SystemNotificationController;
 use App\Http\Controllers\TournamentLevelController;
 use App\Http\Controllers\TournamentLevelMatchResultController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +49,7 @@ Auth::routes();
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::get('/test-fcm', [\App\Http\Controllers\Api\TeamController::class, 'testFcm'])->name('test-fcm');
 
 
 

@@ -246,4 +246,10 @@ class TeamController extends Controller
         $user = User::findOrFail($user_id);
         $user->notify(new SendPushNotification($title, $body));
     }
+
+    public function testFcm($user_id = 1, $title = "testing title", $body = "testing boddy")
+    {
+        $user = User::findOrFail($user_id);
+        $user->notify(new SendPushNotification($title, $body));
+    }
 }

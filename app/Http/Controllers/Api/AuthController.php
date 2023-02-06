@@ -69,7 +69,7 @@ class AuthController extends Controller
         $user_id = $request->user()->id;
         $token = FcmToken::where(['user_id' => $user_id, 'device_key' => $request->token])->get();
         if (count($token) > 0)
-            return response()->json(['Token already exists']);
+            return response()->json(['Token already exists', $token]);
         FcmToken::create([
             'user_id' => $user_id,
             'device_key' => $request->token,

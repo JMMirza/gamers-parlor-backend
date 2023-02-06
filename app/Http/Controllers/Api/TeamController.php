@@ -67,9 +67,9 @@ class TeamController extends Controller
         $user = $request->user();
         $tournament = Tournament::findOrFail($request->tournament_id);
         $enrolled_teams = Enrollment::where('tournament_id', $request->tournament_id)->get();
-        $user_enrollment = Enrollment::where(['user_id' => $request->user()->id, 'tournament_id', $request->tournament_id])->first();
+        $user_enrollment = Enrollment::where(['user_id' => $request->user()->id, 'tournament_id' => $request->tournament_id])->first();
         $credit = Transaction::where('user_id', \Auth::user()->id)->sum('amount');
-        if ($credit > $tournament->registration_fee) {
+        if ($user->is_vip == 1 && $tournament->is_vip == 1) {
             if (!$user_enrollment) {
                 // if ($user->is_vip == 0) {
                 if ($tournament->number_of_request >= count($enrolled_teams)) {
@@ -97,6 +97,7 @@ class TeamController extends Controller
                         file_put_contents($imageFullPath, $image_base64);
                         $input['team_logo'] = $imageName;
                     }
+                    $input['is_ladder'] = 0;
                     $input['name'] = $request->team_name;
                     // dd($input);
                     $team = Team::create($input);
@@ -129,6 +130,66 @@ class TeamController extends Controller
                 return response('Tournament participant places are filled', 400);
             }
             return response('You have already participated in this tournament', 400);
+        } else {
+            if ($credit > $tournament->registration_fee) {
+                if (!$user_enrollment) {
+                    if ($tournament->number_of_request >= count($enrolled_teams)) {
+                        Transaction::create([
+                            'user_id' => $request->user()->id,
+                            'amount' => -1 * abs($credit - $tournament->registration_fee),
+                            'currency' => 'USD',
+                            'full_name' => \Auth::user()->name
+                        ]);
+
+                        $input = $request->all();
+                        $input['user_id'] = $request->user()->id;
+                        if ($request->team_logo) {
+                            $path = public_path() . '/files/games/';
+                            if (!File::exists($path)) {
+                                File::makeDirectory($path, $mode = 0777, true, true);
+                            }
+
+                            $image_parts = explode(";base64,", $request->team_logo);
+                            $image_type_aux = explode("image/", $image_parts[0]);
+                            $image_type = $image_type_aux[1];
+                            $image_base64 = base64_decode($image_parts[1]);
+                            $imageName = uniqid() . '.png';
+                            $imageFullPath = $path . $imageName;
+                            file_put_contents($imageFullPath, $image_base64);
+                            $input['team_logo'] = $imageName;
+                        }
+                        $input['name'] = $request->team_name;
+                        // dd($input);
+                        $team = Team::create($input);
+                        TeamMember::create([
+                            'user_id' => $request->user()->id,
+                            'team_id' => $team->id,
+                            'role' => 'Captain'
+                        ]);
+                        // array_push($request->players, $request->user());
+                        foreach ($request->players as  $player) {
+                            TeamMember::create([
+                                'user_id' => $player['id'],
+                                'team_id' => $team->id,
+                                'role' => 'Player'
+                            ]);
+                        }
+
+                        $tournament->request_received = $tournament->request_received + 1;
+                        $tournament->save();
+
+                        Enrollment::create([
+                            'tournament_id' => $request->tournament_id,
+                            'team_id' => $team->id,
+                            'user_id' => $request->user()->id
+                        ]);
+                        return response($team, 200);
+                    }
+
+                    return response('Tournament participant places are filled', 400);
+                }
+                return response('You have already participated in this tournament', 400);
+            }
         }
         return response('You do not have enough money to participate for this tournament', 400);
     }

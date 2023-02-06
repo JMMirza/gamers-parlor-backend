@@ -52,7 +52,7 @@ class UserController extends Controller
     public function getUserProfile(Request $request)
     {
         $user_email = $request->user()->email;
-        $user = User::where('email', $user_email)->with('game_tags.game_tag')->first();
+        $user = User::where('email', $user_email)->with('game_tags')->first();
         return response($user, 200);
     }
 
